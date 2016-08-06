@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World</title>
+    <script src="https://npmcdn.com/redux@latest/dist/redux.min.js"></script>
+</head>
+<body>
+<div>
+    <p>
+        <span id="text">0</span><br/>
+        Clicked:
+        <button id="helloworld">One</button>
+        <button id="goodbye">Two</button>
+    </p>
+</div>
+<script>
+    function say(state, action) {
+        if (typeof state === 'undefined') {
+            return 'Say something'
+        }
+
+        switch (action.type) {
+            case 'helloworld':
+                return 'Hello World!';
+            case 'goodbye':
+                return 'Good bye';
+        }
+    }
+
+    var store = Redux.createStore(say);
+    var text = document.getElementById('text');
+
+    function render() {
+        text.innerHTML = store.getState().toString();
+    }
+    render();
+    store.subscribe(render);
+
+    document.getElementById('helloworld')
+            .addEventListener('click', function () {
+                store.dispatch({type: 'helloworld'});
+            });
+
+    document.getElementById('goodbye')
+            .addEventListener('click', function () {
+                store.dispatch({type: 'goodbye'});
+            });
+</script>
+
+</body>
+</html>
